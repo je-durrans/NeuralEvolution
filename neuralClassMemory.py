@@ -46,16 +46,17 @@ class Network:
         if output[2]:
             return "R"
         raise ValueError("All outputs are zero")
-        
-from random import choice
-c = Network()
 
-def test():
-    digits = (0, 1)
-    for i in range(20):
-        fif = choice(digits)
-        print(fif, end=": ")
-        print(c.think(fif))
-test()
+if __name__ == "__main__":
+    from random import choice
+    c = Network()
+
+    def test():
+        digits = (0, 1)
+        for i in range(20):
+            fif = choice(digits)
+            print(fif, end=": ")
+            print(c.think(fif))
+    test()
 
 
