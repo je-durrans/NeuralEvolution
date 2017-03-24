@@ -33,6 +33,8 @@ TRAIL = (
 (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
 )
 
+from NeuralClassMemory import *
+
 def newTrail(trail):
     newTrail = []
     for row in trail:
@@ -53,6 +55,7 @@ class SantaFeAgent():
         self.y = 0
         self.foodEaten = 0
         self.evaluations = 0
+        self.instructions = ""
 
     def R(self):
         self.direction = {"N":"E",
@@ -80,7 +83,7 @@ class SantaFeAgent():
         self.evaluations+=1
 
     def finished(self):
-        stillGoing = 0<=self.x<=31 and 0<=self.y<=31 and self.foodEaten<90 and self.evaluations<600
+        stillGoing = 0<=self.x<=31 and 0<=self.y<=31 and self.foodEaten<90 and self.evaluations<1000
         return not stillGoing
 
     def foodAhead(self):
@@ -104,10 +107,24 @@ class SantaFeAgent():
         while not self.finished():
             fitness += self.trail[self.y][self.x]
             self.trail[self.y][self.x] = 0
-            instruction = "self."+self.agent.think(self.foodAhead())+"()"
+            instruction = self.agent.think(self.foodAhead())
             #print(instruction)
-            exec(instruction)
+            self.instructions+=instruction
+            exec("self."+instruction+"()")
+        if fitness >=10:
+            print(len(self.instructions), self.instructions)
+        if fitness == 90:
+            print(self.agent.syn)
         return fitness
+
+    def createOffspring(self, other):
+        syn1 = self.agent.syn
+        syn2 = other.agent.syn
+
+        new = SantaFeAgent(Network())
+        new.syn = (syn1 + syn2) / 2
+
+        return new
 
 
 
