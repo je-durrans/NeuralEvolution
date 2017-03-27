@@ -14,14 +14,20 @@ class Network:
         self.historySize = history
         self.hiddenNodes = hiddenNodes
         if weights == []:
-            self.syn = np.array([2*np.random.random((1+3*self.historySize, self.hiddenNodes)),
-                        2*np.random.random((self.hiddenNodes, 3))
+            self.syn = np.array([2*np.random.random((1+3*self.historySize, self.hiddenNodes))-1,
+                        2*np.random.random((self.hiddenNodes, 3))-1
                         ])
         else:
             self.syn=[]
             pass#weights
         self.history=[0]*3*self.historySize
-        
+
+    def getRandomArray(self, param=1):
+        syn = np.array([2*param*np.random.random((1+3*self.historySize, self.hiddenNodes))-param,
+                        2*param*np.random.random((self.hiddenNodes, 3))-param
+                        ])
+        return syn
+    
     def think(self, foodInFront):
         
         inputData = np.array([foodInFront]+self.history)

@@ -23,8 +23,7 @@ from random import *
 
 populationSize = 20  # even number
 moveLimit = 600
-numberOfGenerations = 1000
-mutationParameter = 20  # standard deviation
+numberOfGenerations = 100
 
 def instantiateAgents(populationSize):
     agents = []
@@ -35,23 +34,23 @@ def instantiateAgents(populationSize):
 
 
 if __name__ == "__main__":
-    SantaFeAgent.sigma = mutationParameter
 
-    agree = False
     agents = instantiateAgents(populationSize)
     
     for generation in range(numberOfGenerations):
-        print("commencing round", generation)
+        #print("commencing round", generation)
         agents = sorted(agents, key=lambda x: -x[1])
-        print("best score is:", agents[0][1])
+        #print("best score is:", agents[0][1])
 
         if round == numberOfGenerations-1: break
         for index in range(populationSize // 2):
             index2 = randrange(populationSize//2-1)
             if index2 >= index:
                 index2 += 1
-            agents[index+populationSize//2] = [agents[index][0].createOffspring(agents[index2 % (populationSize//2)][0]), 0]
+            newAgent = agents[index][0].createOffspring(agents[index2 % (populationSize//2)][0])
+            agents[index+populationSize//2] = [newAgent, newAgent.fitness()]
 
+    print("Fitness:", agents[0][1])
     print(agents[0][0].agent.syn)
     input()
 
