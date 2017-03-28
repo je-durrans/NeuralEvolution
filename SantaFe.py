@@ -118,16 +118,16 @@ class SantaFeAgent():
         print(fitness)
         return fitness
 
-    def mutate(self):
-        self.agent.syn+=self.agent.getRandomArray(0.25)
+    def mutate(self, param=0.5):
+        self.agent.syn+=self.agent.getRandomArray(param)
 
-    def createOffspring(self, other):
+    def createOffspring(self, other, param=0.5):
         syn1 = self.agent.syn
         syn2 = other.agent.syn
 
         new = SantaFeAgent(Network())
-        new.syn = (syn1 + syn2) / 2
-        new.mutate()
+        #new.syn = (syn1 + syn2) / 2
+        new.mutate(param)
 
         return new
 

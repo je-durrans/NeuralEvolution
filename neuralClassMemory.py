@@ -15,8 +15,8 @@ class Network:
         self.hiddenNodes = hiddenNodes
         if weights == []:
             self.syn = np.array([2*np.random.random((1+3*self.historySize, self.hiddenNodes))-1,
-                        2*np.random.random((self.hiddenNodes, 3))-1
-                        ])
+                                 2*np.random.random((self.hiddenNodes, 3))-1
+                                 ])
         else:
             self.syn=[]
             pass#weights

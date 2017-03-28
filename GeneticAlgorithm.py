@@ -47,7 +47,7 @@ if __name__ == "__main__":
             index2 = randrange(populationSize//2-1)
             if index2 >= index:
                 index2 += 1
-            newAgent = agents[index][0].createOffspring(agents[index2 % (populationSize//2)][0])
+            newAgent = agents[index][0].createOffspring(agents[index2 % (populationSize//2)][0], param=numberOfGenerations/(generation+1))
             agents[index+populationSize//2] = [newAgent, newAgent.fitness()]
 
     print("Fitness:", agents[0][1])
