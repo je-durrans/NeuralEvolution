@@ -1,5 +1,5 @@
 TRAIL = (
-(1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+(0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
 (0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
 (0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0),
 (0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0),
@@ -83,7 +83,7 @@ class SantaFeAgent():
         self.evaluations+=1
 
     def finished(self):
-        stillGoing = 0<=self.x<=31 and 0<=self.y<=31 and self.foodEaten<90 and self.evaluations<1000
+        stillGoing = 0<=self.x<=31 and 0<=self.y<=31 and self.foodEaten<89 and self.evaluations<600
         return not stillGoing
 
     def foodAhead(self):
@@ -102,7 +102,7 @@ class SantaFeAgent():
         except IndexError:
             return 0
 
-    def fitness(self):
+    def fitness(self, bestFitness=100):
         fitness = 0
         while not self.finished():
             fitness += self.trail[self.y][self.x]
@@ -111,25 +111,28 @@ class SantaFeAgent():
             #print(instruction)
             self.instructions+=instruction
             exec("self."+instruction+"()")
-        if fitness >=10:
-            print(len(self.instructions), self.instructions)
-        if fitness == 90:
-            print(self.agent.syn)
-        print(fitness)
+        #if fitness >=10:
+        #    print(len(self.instructions), self.instructions)
+        #if fitness == 89:
+        #    print(self.agent.syn)
+        if fitness > bestFitness:
+            print(fitness)
         return fitness
 
     def mutate(self, param=0.5):
         self.agent.syn+=self.agent.getRandomArray(param)
 
-    def createOffspring(self, other, param=0.5):
+
+    def createOffspring(self, other, param=0.1):#0.5):
         syn1 = self.agent.syn
         syn2 = other.agent.syn
 
-        new = SantaFeAgent(Network())
-        #new.syn = (syn1 + syn2) / 2
+        new = SantaFeAgent(Agent())
+        #new.syn = (syn1 + syn2) / 2 # comment out to only mutate
         new.mutate(param)
 
         return new
+        
 
 
 

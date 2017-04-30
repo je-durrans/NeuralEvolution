@@ -7,10 +7,9 @@ def nonlin(x, deriv=False):
         return x*(1-x)
     return 1/(1+np.exp(-x))
     
-class Network:
+class Agent:
 
     def __init__(self, weights=[], history=4, hiddenNodes=10):
-
         self.historySize = history
         self.hiddenNodes = hiddenNodes
         if weights == []:
@@ -18,8 +17,8 @@ class Network:
                                  2*np.random.random((self.hiddenNodes, 3))-1
                                  ])
         else:
-            self.syn=[]
-            pass#weights
+            self.syn=weights
+
         self.history=[0]*3*self.historySize
 
     def getRandomArray(self, param=1):
@@ -55,7 +54,7 @@ class Network:
 
 if __name__ == "__main__":
     from random import choice
-    c = Network()
+    c = Agent()
 
     def test():
         digits = (0, 1)
